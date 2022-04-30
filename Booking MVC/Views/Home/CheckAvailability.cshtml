@@ -1,0 +1,166 @@
+﻿@model IEnumerable<Booking_MVC.Models.RoomViewModel>
+
+@{
+    ViewBag.Title = "CheckAvailability";
+}
+
+<div class="row container">
+    <h2>Room Availability</h2>
+    <div>
+        <form class="form-horizontal" role="search" action="/Home/CheckAvailability/" method="get">
+            <div class="form-group">
+                <label class="control-label col-sm-1" for="email">CheckIn</label>
+                <div class="col-sm-2">
+                    <input type="date" class="form-control" placeholder="CheckIn Date" name="CheckInDate" id="CheckInDate" value="@ViewBag.BeetweenDatesViewModel.checkInDate.ToString("yyyy-MM-dd")" required>
+                </div>
+                <label class="control-label col-sm-1" for="email">CheckOut</label>
+                <div class="col-sm-2">
+                    <input type="date" class="form-control" placeholder="CheckOut" name="CheckOutDate" id="CheckOutDate" value="@ViewBag.BeetweenDatesViewModel.checkOutDate.ToString("yyyy-MM-dd")" required>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-primary" type="submit">Check availability</button>
+                </div>
+            </div>
+
+        </form>
+
+        <span class="text-danger" id="errorMsg" style="display:none;"><strong> To give a chance to everyone to book a room, the stay can’t be longer than 3 days and can’t be reserved more than 30 days in advance.
+</strong></span>
+    </div>
+</div>
+<br />
+
+<div class="row clearfix">
+    @foreach (var item in Model)
+    {
+
+        <div class="card col-md-3">
+            <div class="card" style="background-color: lightgray; border-radius: 6px">
+                <div class="card-header">
+                    <br>
+                    <h2 align="center">@Html.DisplayFor(modelItem => item.roomNumber)</h2>
+                </div>
+                <p align="center"><strong>@Html.DisplayFor(modelItem => item.roomDetails)</strong></p>
+                <p align="center"><strong>@Html.DisplayFor(modelItem => item.categoryRoom) </strong></p>
+                <a href="/Home/Book/?idRoom=@item.idRoom&checkInDate=@ViewBag.BeetweenDatesViewModel.checkInDate.ToString("yyyy-MM-dd")&checkOutDate=@ViewBag.BeetweenDatesViewModel.checkOutDate.ToString("yyyy-MM-dd")" class="btn btn-primary btn-lg btn-block">Reserve</a>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    }
+</div>
+<br />
+@if (Model.Count() == 0)
+{
+    if (ViewBag.Message == "Y")
+    {
+        <span class="text-danger"><strong>All reservations must start at least the next day of booking.Please change the Check-In Date</strong></span>
+
+    }
+    else
+    {
+
+        <div class="alert alert-danger" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <h4 class="alert-heading">Ooops!</h4>
+            <p>We have no availability here between @ViewBag.BeetweenDatesViewModel.checkInDate.ToString("ddd MMM dd yyyy") and @ViewBag.BeetweenDatesViewModel.checkOutDate.ToString("ddd MMM dd yyyy").</p>
+            <hr>
+            <p class="mb-0">
+                Sorry, we have no rooms available for the dates of your stay.
+            </p>
+        </div>
+    }
+}
+
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            focusCheckInDate();
+            focusCheckOutDate();
+            $("#CheckInDate").change(function () {
+
+                focusCheckOutDate();
+            });
+            function focusCheckInDate() {
+                var todayDate = calculateCurrentDate();
+                $("#CheckInDate").attr("min", todayDate);
+                var days30Date = calculate30DaysafterDate();
+                $("#CheckInDate").attr("max", days30Date);
+            }
+
+
+            function focusCheckOutDate() {
+                var todayDate = calculateCurrentDate();
+                var checkInDate = $("#CheckInDate").val();
+                if (checkInDate != null && checkInDate != "") {
+                    $("#CheckOutDate").attr("min", checkInDate);
+                } else {
+                    $("#CheckOutDate").attr("min", todayDate);
+                }
+
+                var days3Date = calculate3DaysafterCheckInDate();
+                $("#CheckOutDate").attr("max", days3Date);
+                $("#errorMsg").show();
+            }
+            function calculateCurrentDate() {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+
+                today = yyyy + '-' + mm + '-' + dd;
+                return today;
+            }
+
+            function calculate30DaysafterDate() {
+                var today = new Date();
+                today.setDate(today.getDate() + 30);
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+
+                today = yyyy + '-' + mm + '-' + dd;
+                return today;
+            }
+
+            function calculate3DaysafterCheckInDate() {
+                var date = new Date($("#CheckInDate").val());
+                date.setDate(date.getDate() + 3);
+                var dd = date.getDate();
+                var mm = date.getMonth() + 1; //January is 0!
+                var yyyy = date.getFullYear();
+
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+
+                date = yyyy + '-' + mm + '-' + dd;
+                return date;
+            }
+        });
+
+    </script>
+
+}

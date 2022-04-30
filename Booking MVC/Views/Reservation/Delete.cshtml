@@ -1,0 +1,82 @@
+﻿@model Booking_MVC.Models.ReservationViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete confirmation</h2>
+
+<h3>Are you sure you want to delete this reservation?</h3>
+<div>
+    <h4>Reservation details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.idReservation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idReservation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idRoom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idRoom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.checkInDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.checkInDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.checkOutDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.checkOutDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" name="idReservation" value="@Model.idReservation" />
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

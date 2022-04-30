@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Booking_MVC.Models.RoomViewModel>
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2>Rooms</h2>
+
+    <p>
+        <a href="@Url.Action("Create")" class="btn btn-primary" title="New"><span class="glyphicon glyphicon-plus"></span></a>
+
+    </p>
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.roomNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.roomDetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.categoryRoom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.roomStatus)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.roomNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.roomDetails)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.categoryRoom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.roomStatus)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.idRoom }) " class="btn btn-primary" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="@Url.Action("Detail", new { id = item.idRoom }) " class="btn btn-primary" title="Details"><span class="glyphicon glyphicon-list"></span></a>
+                    <a href="@Url.Action("Delete", new { id = item.idRoom }) " class="btn btn-primary" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+        }
+    </table>

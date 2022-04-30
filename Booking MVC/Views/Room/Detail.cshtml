@@ -1,0 +1,57 @@
+﻿@model Booking_MVC.Models.RoomViewModel
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Detail</h2>
+
+<div>
+    <h4>Room</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.idRoom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idRoom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.roomNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.roomNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.roomDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.roomDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.categoryRoom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.categoryRoom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.roomStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.roomStatus)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

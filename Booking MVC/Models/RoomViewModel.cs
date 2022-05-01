@@ -9,10 +9,11 @@ namespace Booking_MVC.Models
 {
     public class RoomViewModel
     {
-
+        [DisplayName("IdRoom")]
         public int idRoom { get; set; }
         [Required]
         [DisplayName("Room Number")]
+        [Range(0, Int32.MaxValue, ErrorMessage = "The field {0} must be greater than {1}.")]
         public int roomNumber { get; set; }
 
 

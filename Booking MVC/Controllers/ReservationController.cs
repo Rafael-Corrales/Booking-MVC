@@ -61,7 +61,7 @@ namespace Booking_MVC.Controllers
             ViewBag.Rooms = rooms;
             return View();
         }
-
+        #endregion  
         #region Create Post Form
         /// <summary>
         ///  Create Reservation By Submitted Form by Post Method
